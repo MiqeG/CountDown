@@ -1,0 +1,10 @@
+{
+  "lambda": {
+    "role": "CountLambda-executor",
+    "name": "CountLambda",
+    "region": "eu-west-3"
+  },
+  "api": {
+    "id": "2gl2bug4fj"
+  }
+}

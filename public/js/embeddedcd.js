@@ -1,14 +1,16 @@
 
 $('.ui.form.countdown').addClass('loading')
-$.ajax({
-    url: "https://2gl2bug4fj.execute-api.eu-west-3.amazonaws.com/latest/countdown",
+let date=$('#userDateDiv').text() // get date from DB not implemented
+let interval;
+$.ajax({ 
+    url: "https://2gl2bug4fj.execute-api.eu-west-3.amazonaws.com/latest/countdown?date="+date,
     type: "get", //send it through get method
     data: {
 
     },
     success: function (result) {
         //Do Something
-        let interval;
+        
         
         $('#hiddenDiv').text(result.remainingTime)
         var counter = result.remainingTime;
@@ -41,7 +43,7 @@ $.ajax({
                     $("#DateDiv").text(result.countDownDateFormatted);
                     $('.ui.form.countdown').removeClass('loading')
                 // If the count down is over, write some text 
-
+                   
 
                 if (distance < 0) {
                     document.getElementById("countDiv").innerHTML = "It's time to get noisy champs!!!";

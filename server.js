@@ -7,25 +7,40 @@ let countdown = require('moment-countdown');
 let moment=require('moment')
 
 app.use(bodyParser.json());
+app.set('view engine', 'ejs')
 app.use('/assets', express.static('public'))
-
+app.get('/start',(req,res)=>{
+  if(req.query.date){
+    res.render('pages/embedded', { date:req.query.date})
+  }
+})
 app.get('/countdown', (req, res) => {
-    let calculusDate=new Date('2019-06-06T09:00:00.512Z')
-    let countDonwDate = moment('2019-06-06T09:00:00')
+  let locale='fr'
+  if(req.query.locale){
+    locale=req.query.locale
+  }
+  moment.locale(locale); 
+  if(req.query.date){
+    let calculusDate=new Date(req.query.date)
+    let countDownDate = moment(req.query.date)
    
     let dateNow = new Date
-    let finalDate = countDonwDate - dateNow
-    var duration = moment(dateNow).countdown(countDonwDate).toString()
+    let finalDate = countDownDate - dateNow
+    var duration = moment(dateNow).countdown(countDownDate).toString()
     let json = {
       calculusDate:calculusDate,
-      countDonwDate: countDonwDate,
+      countDownDate: countDownDate,
       dateNow: dateNow,
       remainingTime: finalDate,
       dateNowFormatted: moment(dateNow).format('Do MMMM YYYY, h:mm:ss'),
-      countDownDateFormatted: moment(countDonwDate).format('Do MMMM YYYY, h:mm:ss'),
+      countDownDateFormatted: moment(countDownDate).format('Do MMMM YYYY, h:mm:ss'),
       remainingFormatted: duration
   
     }
     res.json(json)
+  }else{
+    res.json({"error":"no date provided"})
+  }
+   
   })
   module.exports=app

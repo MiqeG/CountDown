@@ -41,6 +41,7 @@ $.ajax({
                 document.getElementById("countDiv").innerHTML = days+" jours "+ hours+" heures "+
                     minutes + " minutes et " + seconds + "secondes ";
                     $("#DateDiv").text(result.countDownDateFormatted);
+                    $('.fakeloader').fadeIn(600)
                     $('.ui.form.countdown').removeClass('loading')
                 // If the count down is over, write some text 
                    

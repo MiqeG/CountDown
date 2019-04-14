@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/semantic/semantic.min.css">
+    <link rel="stylesheet" href="assets/node_modules/semantic-ui-calendar/dist/calendar.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+</head>
+
+<body style="padding-top:10%;padding-left:10%;padding-right: 30%;padding-bottom: 15%; text-align: center">
+ 
+    <div >
+         <img src="assets/img/countrobosmall.png" class="ui small rounded centered image" alt="">
+    </div>
+    <h3>countBot iFrame maker</h3>
+    <form class="ui form">
+        <div class="field">
+            <label for=""> <img src="assets/img/calendar.jpg" class="ui mini rounded centered image" alt="">Date</label>
+            <div class="ui calendar" id="example1">
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" placeholder="Date/Time">
+                </div>
+            </div>
+        </div>
+        <div class="field" >
+            <br>
+            <div class="ui primary button validator">
+                Valider
+            </div>
+        </div>
+        <div class="field">
+            <div id="sourceCode" hidden>
+                <label>Src</label>
+                <pre><code id="theSource"  class="html"></code></pre>
+
+
+            </div>
+
+        </div>
+        <div class="field" >
+            <div id="copierdiv" hidden>
+                <div class="ui primary button copyclass" id="copyer">Copier</div>
+            </div>
+
+        </div>
+        <div class="field" >
+            <div id="linkDiv" hidden>
+                <label>Lien</label>
+                <div><a id="linker" href="" target="_blank"></a></div>
+
+
+            </div>
+
+        </div>
+        <div class="field" >
+            <div id="copierdiv2" hidden>
+                <div class="ui primary button copyclass" id="copyer2">Copier</div>
+            </div>
+
+        </div>
+        <div class="field">
+            <br>
+            <iframe id="theFrame" width="100%" height="315px"
+                src="https://2gl2bug4fj.execute-api.eu-west-3.amazonaws.com/latest/start?date=06-06-2019-09:00:00"
+                frameborder="0" allowfullscreen hidden></iframe>
+        </div>
+
+    </form>
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/jquery-3.4.0.min.js"
+    integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="assets/node_modules/semantic-ui-calendar/dist/calendar.min.js"></script>
+<script src="https://2gl2bug4fj.execute-api.eu-west-3.amazonaws.com/latest/assets/js/moment.js"></script>
+<script src="https://2gl2bug4fj.execute-api.eu-west-3.amazonaws.com/latest/assets/semantic/semantic.min.js"></script>
+<script src="https://cdn.cai.tools.sap/webchat/webchat.js" channelId="5da73a43-6508-494e-8383-698c67f80b0c"
+    token="f8510c0a47b121a9ae177bb6a09a339d" id="cai-webchat"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>
+const copyToClipboard = str => {
+  const el = document.createElement('textarea');
+  el.value = str;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+};
+$('#copyer').click(function(){
+copyToClipboard($('#theSource').text())
+})
+$('#copyer2').click(function(){
+    copyToClipboard($('#linker').text())
+})
+    $('.validator').click(function () {
+
+        if ($($('input')[0]).val() == '') {
+            return
+        }
+
+        $('#theFrame').fadeIn(600)
+
+        $('#sourceCode').fadeIn(600)
+        $('#copierdiv').fadeIn(600)
+        $('#copierdiv2').fadeIn(600)
+        $('#linkDiv').fadeIn(600)
+        let picked = new Date($($('input')[0]).val())
+        moment.locale('fr')
+        let final = moment(picked).format()
+        let finalToString = final.split('+')
+
+        let result = "https://2gl2bug4fj.execute-api.eu-west-3.amazonaws.com/latest/start?date=" + finalToString[0]
+        $('#linker').text(result)
+        $('#linker').attr('href', result)
+
+        let iFrameVal = `<iframe width="90%" height="315px" src="${result}" frameborder="0" allowfullscreen></iframe>`
+        $('#theSource').text(iFrameVal)
+
+
+        $('#theFrame').attr('src', result)
+
+    })
+
+    $('#example1').calendar();
+</script>

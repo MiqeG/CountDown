@@ -18,7 +18,7 @@ $.ajax({
         function newCountDown(date) {
 
            
-
+            
             var countDownDate = new Date(date).getTime();
            
 

@@ -14,6 +14,10 @@ app.get('/start',(req,res)=>{
     res.render('pages/embedded', { date:req.query.date})
   }
 })
+
+app.get('/schedule',(req,res)=>{
+  res.render('pages/schedule')
+})
 app.get('/countdown', (req, res) => {
   let locale='fr'
   if(req.query.locale){
@@ -22,7 +26,8 @@ app.get('/countdown', (req, res) => {
   moment.locale(locale); 
   if(req.query.date){
     let calculusDate=new Date(req.query.date)
-    let countDownDate = moment(req.query.date)
+    calculusDate=calculusDate-(2*60*60*1000)
+    let countDownDate = moment(req.query.date).format()
    
     let dateNow = new Date
     let finalDate = countDownDate - dateNow
